@@ -357,7 +357,7 @@ export default function App() {
             {/* UI Overlay */}
             <div className="absolute top-0 left-0 w-full p-4 sm:p-6 z-40 flex justify-between items-start pointer-events-none">
                 <div>
-                    <h1 className="text-2xl sm:text-3xl font-bold text-white italic drop-shadow-md">NewYear RACING <span className="text-yellow-300">2026</span></h1>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-white italic drop-shadow-md">BEACH RACING <span className="text-yellow-300">2026</span></h1>
                     {driver && (
                         <p className="text-slate-100 text-xs sm:text-sm drop-shadow">Hold GAS to reach the new year!</p>
                     )}
