@@ -340,8 +340,8 @@ export default function App() {
             <div className="absolute bottom-0 left-0 w-full h-1/2 bg-[#dcb162] z-0"></div>
 
             {/* Main Game View */}
-            {/* Lifted up slightly for mobile to leave room for controls */}
-            <div className="absolute inset-x-0 bottom-[20%] sm:bottom-[30%] h-[300px] sm:h-[400px] w-full overflow-hidden z-10">
+            {/* Lifted up significantly (35%) to accommodate higher controls on mobile */}
+            <div className="absolute inset-x-0 bottom-[35%] sm:bottom-[30%] h-[300px] sm:h-[400px] w-full overflow-hidden z-10">
                 <Track distance={distance} />
 
                 {/* Car Container */}
@@ -357,7 +357,7 @@ export default function App() {
             {/* UI Overlay */}
             <div className="absolute top-0 left-0 w-full p-4 sm:p-6 z-40 flex justify-between items-start pointer-events-none">
                 <div>
-                    <h1 className="text-2xl sm:text-3xl font-bold text-white italic drop-shadow-md">IG RACER <span className="text-yellow-300">2026</span></h1>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-white italic drop-shadow-md">NewYear RACING <span className="text-yellow-300">2026</span></h1>
                     {driver && (
                         <p className="text-slate-100 text-xs sm:text-sm drop-shadow">Hold GAS to reach the new year!</p>
                     )}
@@ -371,19 +371,6 @@ export default function App() {
                     </div>
                 )}
             </div>
-
-            {/* Progress Bar - Moved UP */}
-            {driver && (
-                <div className="absolute bottom-44 sm:bottom-52 left-0 w-full px-4 sm:px-6 z-40 pointer-events-none">
-                    <div className="w-full h-3 sm:h-4 bg-slate-800/80 rounded-full border border-slate-600/50 relative overflow-hidden backdrop-blur-sm">
-                        <div className="h-full bg-gradient-to-r from-red-500 to-yellow-400 transition-all duration-75 shadow-[0_0_10px_rgba(239,68,68,0.5)]" style={{ width: `${progress}%` }}></div>
-                        <div className="absolute top-0 left-0 w-full h-full flex justify-between px-2 text-[10px] text-white font-mono items-center">
-                            <span>2025</span>
-                            <span>2026</span>
-                        </div>
-                    </div>
-                </div>
-            )}
 
             {/* Driver Selection Overlay (Centered) */}
             {!driver && (
@@ -415,9 +402,32 @@ export default function App() {
                 </div>
             )}
 
-            {/* Controls (Gas) - Bottom Bar - MOVED UP */}
+            {/* Dashboard (Progress + Controls) */}
             {driver && (
-                <div className="absolute bottom-0 left-0 w-full h-48 sm:h-56 bg-gradient-to-t from-black/80 to-transparent z-50 flex items-end justify-center pb-16 sm:pb-20 animate-in slide-in-from-bottom-full duration-500">
+                <div className="absolute bottom-24 sm:bottom-10 left-0 w-full px-4 sm:px-8 z-50 flex items-center justify-between gap-4 sm:gap-8 animate-in slide-in-from-bottom-full duration-500">
+
+                    {/* Progress Bar (The "Lap") */}
+                    <div className="flex-1 bg-slate-900/80 backdrop-blur-md rounded-2xl p-3 border border-slate-700 shadow-xl">
+                        <div className="flex justify-between text-xs text-slate-400 font-mono mb-1">
+                            <span>START</span>
+                            <span>FINISH</span>
+                        </div>
+                        <div className="w-full h-4 sm:h-6 bg-slate-800 rounded-full border border-slate-600 overflow-hidden relative">
+                            <div className="h-full bg-gradient-to-r from-red-500 via-yellow-400 to-green-500 shadow-[0_0_15px_rgba(239,68,68,0.5)] transition-all duration-75"
+                                style={{ width: `${progress}%` }}></div>
+
+                            {/* Tick marks */}
+                            <div className="absolute inset-0 flex justify-between px-2">
+                                {[...Array(5)].map((_, i) => <div key={i} className="w-0.5 h-full bg-black/20"></div>)}
+                            </div>
+                        </div>
+                        <div className="flex justify-between text-xs text-white font-bold font-mono mt-1">
+                            <span>2025</span>
+                            <span>2026</span>
+                        </div>
+                    </div>
+
+                    {/* Gas Button */}
                     <button
                         onMouseDown={handleGasStart}
                         onMouseUp={handleGasEnd}
@@ -425,11 +435,12 @@ export default function App() {
                         onTouchStart={handleGasStart}
                         onTouchEnd={handleGasEnd}
                         className={`
-                    relative group w-20 h-20 sm:w-24 sm:h-24 rounded-full border-4 transition-all duration-100 ease-out select-none touch-none active:scale-95
-                    ${isGasPressed ? 'bg-red-600 border-red-400 shadow-[0_0_30px_rgba(220,38,38,0.8)]' : 'bg-red-700 border-red-900 shadow-xl hover:bg-red-600'}
+                    relative group flex-shrink-0 w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 transition-all duration-100 ease-out select-none touch-none active:scale-95
+                    ${isGasPressed ? 'bg-red-600 border-red-400 shadow-[0_0_30px_rgba(220,38,38,0.8)] scale-95' : 'bg-red-700 border-red-900 shadow-2xl hover:bg-red-600'}
                 `}
                     >
-                        <span className="absolute inset-0 flex items-center justify-center font-black text-lg sm:text-xl italic tracking-tighter text-white">GAS</span>
+                        <div className="absolute inset-1 rounded-full border-2 border-white/20 border-dashed animate-[spin_10s_linear_infinite]"></div>
+                        <span className="absolute inset-0 flex items-center justify-center font-black text-xl sm:text-2xl italic tracking-tighter text-white drop-shadow-md">GAS</span>
                         {/* Pedal Texture */}
                         <div className="absolute inset-0 opacity-20 bg-[linear-gradient(90deg,transparent_50%,#000_50%)] bg-[length:4px_4px] rounded-full"></div>
                     </button>
