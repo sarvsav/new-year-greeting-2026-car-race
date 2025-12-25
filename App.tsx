@@ -357,11 +357,9 @@ export default function App() {
             {/* UI Overlay */}
             <div className="absolute top-0 left-0 w-full p-4 sm:p-6 z-40 flex justify-between items-start pointer-events-none">
                 <div>
-                    <h1 className="text-2xl sm:text-3xl font-bold text-white italic drop-shadow-md">NYE RACER <span className="text-yellow-300">2026</span></h1>
-                    {driver ? (
+                    <h1 className="text-2xl sm:text-3xl font-bold text-white italic drop-shadow-md">IG RACER <span className="text-yellow-300">2026</span></h1>
+                    {driver && (
                         <p className="text-slate-100 text-xs sm:text-sm drop-shadow">Hold GAS to reach the new year!</p>
-                    ) : (
-                        <p className="text-slate-100 text-xs sm:text-sm drop-shadow animate-pulse">Select your driver...</p>
                     )}
                 </div>
                 {driver && (
@@ -374,9 +372,9 @@ export default function App() {
                 )}
             </div>
 
-            {/* Progress Bar */}
+            {/* Progress Bar - Moved UP */}
             {driver && (
-                <div className="absolute bottom-28 sm:bottom-32 left-0 w-full px-4 sm:px-6 z-40 pointer-events-none">
+                <div className="absolute bottom-44 sm:bottom-52 left-0 w-full px-4 sm:px-6 z-40 pointer-events-none">
                     <div className="w-full h-3 sm:h-4 bg-slate-800/80 rounded-full border border-slate-600/50 relative overflow-hidden backdrop-blur-sm">
                         <div className="h-full bg-gradient-to-r from-red-500 to-yellow-400 transition-all duration-75 shadow-[0_0_10px_rgba(239,68,68,0.5)]" style={{ width: `${progress}%` }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex justify-between px-2 text-[10px] text-white font-mono items-center">
@@ -387,30 +385,39 @@ export default function App() {
                 </div>
             )}
 
-            {/* Controls or Driver Selection */}
-            <div className="absolute bottom-0 left-0 w-full h-28 sm:h-32 bg-gradient-to-t from-black/80 to-transparent z-50 flex items-center justify-center pb-6 sm:pb-8">
-                {!driver ? (
-                    <div className="flex space-x-8 animate-in slide-in-from-bottom-10 fade-in duration-300">
-                        <button onClick={() => selectDriver('male')} className="flex flex-col items-center group">
-                            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-blue-500 border-4 border-white shadow-lg flex items-center justify-center transform group-hover:scale-110 transition-transform">
+            {/* Driver Selection Overlay (Centered) */}
+            {!driver && (
+                <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/40 backdrop-blur-[2px] animate-in fade-in duration-300">
+                    <h2 className="text-white font-bold text-xl sm:text-2xl mb-8 drop-shadow-lg tracking-wider italic">CHOOSE YOUR DRIVER</h2>
+                    <div className="flex space-x-8 sm:space-x-12 animate-in zoom-in-95 duration-300">
+                        <button onClick={() => selectDriver('male')} className="flex flex-col items-center group transition-transform active:scale-95">
+                            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-blue-500 border-4 border-white shadow-[0_0_20px_rgba(59,130,246,0.5)] flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                                 {/* Simple Helmet Icon */}
-                                <div className="w-8 h-8 rounded-full bg-blue-800 relative">
-                                    <div className="absolute top-2 left-1 w-6 h-3 bg-black rounded-sm"></div>
+                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-800 relative shadow-inner">
+                                    <div className="absolute top-2 left-1 w-6 sm:w-8 h-3 sm:h-4 bg-black rounded-sm"></div>
+                                    <div className="absolute bottom-1 left-2 w-5 sm:w-6 h-1 bg-white/20 rounded-full"></div>
                                 </div>
                             </div>
-                            <span className="mt-2 text-white font-bold text-sm drop-shadow-md bg-black/50 px-2 rounded">AG</span>
+                            <span className="mt-4 text-white font-black text-base sm:text-lg tracking-widest drop-shadow-md bg-black/40 px-3 py-1 rounded-full">AG</span>
                         </button>
-                        <button onClick={() => selectDriver('female')} className="flex flex-col items-center group">
-                            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-pink-500 border-4 border-white shadow-lg flex items-center justify-center transform group-hover:scale-110 transition-transform">
+
+                        <button onClick={() => selectDriver('female')} className="flex flex-col items-center group transition-transform active:scale-95">
+                            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-pink-500 border-4 border-white shadow-[0_0_20px_rgba(236,72,153,0.5)] flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                                 {/* Simple Helmet Icon */}
-                                <div className="w-8 h-8 rounded-full bg-pink-700 relative">
-                                    <div className="absolute top-2 left-1 w-6 h-3 bg-black rounded-sm"></div>
+                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-pink-700 relative shadow-inner">
+                                    <div className="absolute top-2 left-1 w-6 sm:w-8 h-3 sm:h-4 bg-black rounded-sm"></div>
+                                    <div className="absolute bottom-1 left-2 w-5 sm:w-6 h-1 bg-white/20 rounded-full"></div>
                                 </div>
                             </div>
-                            <span className="mt-2 text-white font-bold text-sm drop-shadow-md bg-black/50 px-2 rounded">IG</span>
+                            <span className="mt-4 text-white font-black text-base sm:text-lg tracking-widest drop-shadow-md bg-black/40 px-3 py-1 rounded-full">IG</span>
                         </button>
                     </div>
-                ) : (
+                </div>
+            )}
+
+            {/* Controls (Gas) - Bottom Bar - MOVED UP */}
+            {driver && (
+                <div className="absolute bottom-0 left-0 w-full h-48 sm:h-56 bg-gradient-to-t from-black/80 to-transparent z-50 flex items-end justify-center pb-16 sm:pb-20 animate-in slide-in-from-bottom-full duration-500">
                     <button
                         onMouseDown={handleGasStart}
                         onMouseUp={handleGasEnd}
@@ -426,8 +433,8 @@ export default function App() {
                         {/* Pedal Texture */}
                         <div className="absolute inset-0 opacity-20 bg-[linear-gradient(90deg,transparent_50%,#000_50%)] bg-[length:4px_4px] rounded-full"></div>
                     </button>
-                )}
-            </div>
+                </div>
+            )}
 
             {/* Celebration Effects */}
             {showCelebration && (
