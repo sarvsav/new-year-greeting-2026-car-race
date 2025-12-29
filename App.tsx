@@ -273,7 +273,7 @@ export default function App() {
         playCheerSound();
         setIsGenerating(true);
 
-        const msg = "Thank you for Amazing 2025! May your filled with a lot of happiness, good health, and success.";
+        const msg = "Thank you for Amazing 2025! May your year filled with a lot of happiness, good health, and success.";
         setGreeting(msg);
         setIsGenerating(false);
     };
